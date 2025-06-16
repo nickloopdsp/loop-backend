@@ -1,5 +1,5 @@
 import { Configuration } from '../interfaces/config.interface';
-import { validationSchema } from '../env.validation';
+import { validationSchema } from '../validation/env.validation';
 
 export class ConfigDocsGenerator {
   static generateMarkdown(): string {
@@ -26,7 +26,9 @@ export class ConfigDocsGenerator {
 
     markdown += '\n## Configuration Sections\n\n';
     const sections: (keyof Configuration)[] = [
-      'api',
+      'apiPrefix',
+      'apiVersion',
+      'throttler',
       'database',
       'cors',
       'featureFlags',

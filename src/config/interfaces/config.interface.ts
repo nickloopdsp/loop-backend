@@ -23,14 +23,22 @@ export interface DatabaseConfig {
 
 export interface FeatureFlagsConfig {
     enableSwagger: boolean;
+    enableRateLimit: boolean;
+}
+
+export interface RateLimitConfig {
+    ttl: number;
+    limit: number;
 }
 
 export interface Configuration {
     port: number;
-    api: ApiConfig;
+    apiPrefix: string;
+    apiVersion: string;
     jwt: JwtConfig;
     cors: CorsConfig;
     database: DatabaseConfig;
-    nodeEnv: string;
+    throttler: RateLimitConfig;
     featureFlags: FeatureFlagsConfig;
+    nodeEnv: string;
 }

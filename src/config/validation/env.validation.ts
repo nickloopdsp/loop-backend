@@ -41,11 +41,21 @@ export const validationSchema = Joi.object({
         .required()
         .description('Database name'),
 
+    // Rate Limiter
+    THROTTLE_TTL: Joi.number()
+        .default(60)
+        .description('Rate limiter time window in seconds'),
+    THROTTLE_LIMIT: Joi.number()
+        .default(10)
+        .description('Maximum number of requests per time window'),
+
     // Feature Flags
-    FEATURE_FLAGS: Joi.object({
-        ENABLE_SWAGGER: Joi.boolean()
-            .default(true)
-            .description('Enable/disable Swagger API documentation'),
-    }).default()
-        .description('Feature flags for enabling/disabling application features'),
+
+    ENABLE_SWAGGER: Joi.boolean()
+        .default(true)
+        .description('Enable/disable Swagger API documentation'),
+    ENABLE_RATELIMIT: Joi.boolean()
+        .default(true)
+        .description('Enable/disable Rate Limit'),
+
 }); 

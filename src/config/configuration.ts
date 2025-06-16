@@ -11,10 +11,8 @@ export default (): Configuration => {
 
     return {
         port: parseInt(process.env.PORT || '3001', 10),
-        api: {
-            prefix: process.env.API_PREFIX || 'api',
-            version: process.env.API_VERSION || 'v1',
-        },
+        apiPrefix: process.env.API_PREFIX || 'api',
+        apiVersion: process.env.API_VERSION || 'v1',
         jwt: {
             secret: process.env.JWT_SECRET || 'default-secret-key-change-in-production',
             expiresIn: process.env.JWT_EXPIRATION || '1d',
@@ -32,7 +30,12 @@ export default (): Configuration => {
         },
         nodeEnv: process.env.NODE_ENV || 'development',
         featureFlags: {
-            enableSwagger: process.env.FEATURE_FLAGS__ENABLE_SWAGGER === 'true',
+            enableSwagger: process.env.ENABLE_SWAGGER === 'true',
+            enableRateLimit: process.env.ENABLE_RATELIMIT === 'true',
+        },
+        throttler: {
+            ttl: parseInt(process.env.THROTTLE_TTL || '60', 10),
+            limit: parseInt(process.env.THROTTLE_LIMIT || '10', 10),
         },
     };
 }; 

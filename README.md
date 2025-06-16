@@ -51,7 +51,10 @@ cp .env.example .env
 | DATABASE_USER | string | Yes | - | Database username |
 | DATABASE_PASSWORD | string | Yes | - | Database password |
 | DATABASE_NAME | string | Yes | - | Database name |
-| FEATURE_FLAGS | object | No | [object Object] | Feature flags for enabling/disabling application features |
+| THROTTLE_TTL | number | No | 60 | Rate limiter time window in seconds |
+| THROTTLE_LIMIT | number | No | 10 | Maximum number of requests per time window |
+| ENABLE_SWAGGER | boolean | No | true | Enable/disable Swagger API documentation |
+| ENABLE_RATELIMIT | boolean | No | true | Enable/disable Rate Limit |
 
 ## Running the Application
 
