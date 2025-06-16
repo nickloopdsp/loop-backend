@@ -17,4 +17,11 @@ export const validationSchema = Joi.object({
     DATABASE_USER: Joi.string().required(),
     DATABASE_PASSWORD: Joi.string().required(),
     DATABASE_NAME: Joi.string().required(),
+
+    // Feature Flags
+    FEATURE_FLAGS: Joi.object({
+        ENABLE_SWAGGER: Joi.boolean()
+            .default(true)
+            .description('Enable Swagger documentation'),
+    }).default(),
 }); 

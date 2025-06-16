@@ -31,5 +31,8 @@ export default (): Configuration => {
             url: databaseUrl,
         },
         nodeEnv: process.env.NODE_ENV || 'development',
+        featureFlags: {
+            enableSwagger: process.env.FEATURE_FLAGS__ENABLE_SWAGGER === 'true',
+        },
     };
 }; 

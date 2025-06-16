@@ -21,6 +21,10 @@ export interface DatabaseConfig {
     url: string;
 }
 
+export interface FeatureFlagsConfig {
+    enableSwagger: boolean;
+}
+
 export interface Configuration {
     port: number;
     api: ApiConfig;
@@ -28,4 +32,5 @@ export interface Configuration {
     cors: CorsConfig;
     database: DatabaseConfig;
     nodeEnv: string;
+    featureFlags: FeatureFlagsConfig;
 }

@@ -1,7 +1,8 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { ValidationPipe } from '@nestjs/common';
+import { AppConfigService } from './config/config.service';
+import { RedDocsModule } from './core/redoc/redocs.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -9,16 +10,10 @@ async function bootstrap() {
   // Enable validation
   app.useGlobalPipes(new ValidationPipe());
 
-  // Swagger setup
-  const config = new DocumentBuilder()
-    .setTitle('Loop API')
-    .setDescription('The Loop API documentation')
-    .setVersion('1.0')
-    .addBearerAuth()
-    .build();
+  const configService = app.get<AppConfigService>(AppConfigService);
 
-  const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api/docs', app, document);
+  // Swagger setup
+  RedDocsModule.setup(app, configService);
 
   await app.listen(process.env.PORT ?? 3001);
 }
