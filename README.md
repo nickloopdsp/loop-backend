@@ -32,8 +32,27 @@ npm install
 
 # Configure your API keys for platform integrations
 cp .env.example .env
-
 ```
+
+## Building SDK
+
+The project includes a TypeScript SDK that is automatically generated from the OpenAPI specification.
+
+```bash
+# Generate and build the SDK
+./scripts/generate-sdk.sh
+
+# The SDK will be generated in the .sdk directory
+# After generation, you can use it in your projects by:
+npm install ./sdk
+```
+
+The SDK generation script will:
+1. Generate TypeScript types and API clients
+2. Build the SDK package
+3. Update package.json with correct version and metadata
+4. Format the generated code
+5. Install dependencies and build the package
 
 ## Environment Variables
 
