@@ -7,6 +7,7 @@ import configuration from './config/configuration';
 import { AppConfigService } from './config/config.service';
 import { AppExceptionFilter } from './core/exceptions/app-exception.filter';
 import { APP_FILTER } from '@nestjs/core';
+import { LoggerModule } from './core/logger/logger.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { APP_FILTER } from '@nestjs/core';
       validationSchema,
       load: [configuration],
     }),
+    LoggerModule,
   ],
   controllers: [AppController],
   providers: [AppService, AppConfigService, {
