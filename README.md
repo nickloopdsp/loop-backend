@@ -1,6 +1,6 @@
 # Loop Backend
 
-A robust NestJS-based backend application with comprehensive API documentation and error handling.
+# AI-Powered Music Career Management Platform
 
 ## Features
 
