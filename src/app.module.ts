@@ -5,6 +5,8 @@ import { AppService } from './app.service';
 import { validationSchema } from './config/env.validation';
 import configuration from './config/configuration';
 import { AppConfigService } from './config/config.service';
+import { AppExceptionFilter } from './core/exceptions/app-exception.filter';
+import { APP_FILTER } from '@nestjs/core';
 
 @Module({
   imports: [
@@ -15,6 +17,9 @@ import { AppConfigService } from './config/config.service';
     }),
   ],
   controllers: [AppController],
-  providers: [AppService, AppConfigService],
+  providers: [AppService, AppConfigService, {
+    provide: APP_FILTER,
+    useClass: AppExceptionFilter,
+  }],
 })
 export class AppModule { }
