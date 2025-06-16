@@ -1,6 +1,6 @@
 # Loop Backend
 
-# AI-Powered Music Career Management Platform
+Backend server AI-Powered Music Career Management Platform
 
 ## Features
 
@@ -14,9 +14,9 @@
 
 ## Prerequisites
 
-- Node.js (v16 or higher)
+- Node.js (v18 or higher)
 - PostgreSQL
-- npm or yarn
+- npm
 
 ## Installation
 
@@ -74,8 +74,8 @@ npm run start:prod
 
 Once the application is running, you can access the API documentation at:
 
-- Swagger UI: `http://localhost:3001/api/docs`
-- ReDoc: `http://localhost:3001/redocs`
+- Swagger UI: [http://localhost:3001/api/docs](http://localhost:3001/api/docs)
+- ReDoc: [http://localhost:3001/redocs](http://localhost:3001/redocs)
 
 ## Project Structure
 
@@ -115,6 +115,19 @@ The application uses Pino for structured logging with the following levels:
 - debug
 - verbose
 
+## Testing
+
+```bash
+# Unit tests
+npm run test
+
+# e2e tests
+npm run test:e2e
+
+# Test coverage
+npm run test:cov
+```
+
 ## Contributing
 
 1. Fork the repository
@@ -126,3 +139,7 @@ The application uses Pino for structured logging with the following levels:
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Support
+
+For support, email support@loop.com or join our Slack channel.
