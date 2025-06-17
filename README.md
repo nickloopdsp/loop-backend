@@ -109,6 +109,11 @@ src/
 │   ├── logger/        # Logging service
 │   └── redoc/         # API documentation
 ├── modules/           # Feature modules
+│   ├── sound-chart/   # Sound chart analysis and management
+│   ├── mock/         # Mock data and testing utilities
+│   ├── music-ai/     # AI-powered music analysis
+│   ├── dashboard-layout/ # Dashboard UI layout management
+│   └── chat/         # Chat functionality
 └── main.ts           # Application entry point
 ```
 
