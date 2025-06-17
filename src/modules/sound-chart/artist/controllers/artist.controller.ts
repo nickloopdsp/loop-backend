@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Query, ParseUUIDPipe } from '@nestjs/common';
+import { Controller, Get, Param, Query, ParseUUIDPipe } from '@nestjs/common';
 import { ArtistService } from '../services/artist.service';
 import { ArtistAudienceDto, ArtistConcertDto, ArtistStatsDto, SoundchartArtistDto, SoundchartsArtistSearchResponse } from '../dto/artist.dtos';
 import { ApiBearerAuth, ApiOperation, ApiParam, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
@@ -78,4 +78,14 @@ export class ArtistController {
   getArtistPlaylists(@Param('uuid', ParseUUIDPipe) uuid: string, @Param('platform') platform: string) {
     return this.artistService.getArtistPlaylists(uuid, platform);
   }
+
+  //:uuid/similar
+  @Get(':uuid/similar')
+  @ApiOperation({ summary: 'Get an artist similar by UUID' })
+  @ApiResponse({ status: 200, description: 'Get an artist similar by UUID', type: Object, isArray: true })
+  @ApiParam({ name: 'uuid', type: String, required: true, example: '123e4567-e89b-12d3-a456-426614174000' })
+  getArtistSimilar(@Param('uuid', ParseUUIDPipe) uuid: string) {
+    return this.artistService.getArtistSimilar(uuid);
+  }
+
 }
