@@ -2,7 +2,7 @@ import { DynamicModule, Module } from '@nestjs/common';
 import { SwaggerModule as NestSwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { INestApplication } from '@nestjs/common';
 import { AppConfigService } from '../../config/config.service';
-import { FeatureFlagsConfig } from 'src/config/interfaces/config.interface';
+import { FeatureFlagsConfig } from '../../config/interfaces/config.interface';
 
 @Module({})
 export class SwaggerModule {

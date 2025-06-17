@@ -1,33 +1,27 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { ChatService } from '../services/chat.service';
-import { CreateChatDto, UpdateChatDto } from '../dto/chat.dtos';
+import { ChatMessageResponseDto, ChatRequestDto } from '../dto/chat.dtos';
+import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Chat')
+@ApiBearerAuth()
 @Controller('chat')
 export class ChatController {
   constructor(private readonly chatService: ChatService) { }
 
-  @Post()
-  create(@Body() createChatDto: CreateChatDto) {
-    return this.chatService.create(createChatDto);
+
+  @Post('message')
+  @ApiOperation({ summary: 'Send a message to the AI' })
+  @ApiResponse({ status: 200, description: 'Send a message to the AI', type: ChatMessageResponseDto })
+  message(@Body() chatRequestDto: ChatRequestDto) {
+    return this.chatService.message(chatRequestDto);
   }
 
-  @Get()
-  findAll() {
-    return this.chatService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.chatService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateChatDto: UpdateChatDto) {
-    return this.chatService.update(+id, updateChatDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.chatService.remove(+id);
+  //stream
+  @Post('stream')
+  @ApiOperation({ summary: 'Stream a message to the AI' })
+  @ApiResponse({ status: 200, description: 'Stream a message to the AI', type: ChatMessageResponseDto })
+  stream(@Body() chatRequestDto: ChatRequestDto) {
+    return this.chatService.stream(chatRequestDto);
   }
 }

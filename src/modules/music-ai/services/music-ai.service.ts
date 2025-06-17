@@ -1,25 +1,82 @@
 import { Injectable } from '@nestjs/common';
-import { CreateMusicAiDto, UpdateMusicAiDto } from '../dto/music-ai.dtos';
+import { CreateJobRequestDto, CreateJobResponseDto, DeleteJobResponseDto, JobDto, JobStatus, JobStatusDto, UploadUrlsDto, WorkflowDto } from '../dto/music-ai.dtos';
 
 @Injectable()
 export class MusicAiService {
-  create(createMusicAiDto: CreateMusicAiDto) {
-    return 'This action adds a new musicAi';
+  async getUploadUrls(): Promise<UploadUrlsDto[]> {
+    return [
+      {
+        uploadUrl: 'https://example.com/upload',
+        downloadUrl: 'https://example.com/download'
+      }
+    ];
   }
 
-  findAll() {
-    return `This action returns all musicAi`;
+  async getWorkflows(page: number, size: number): Promise<WorkflowDto[]> {
+    return [
+      {
+        id: '123e4567-e89b-12d3-a456-426614174000',
+        name: 'My Workflow',
+        slug: 'my-workflow',
+        description: 'My Workflow Description',
+        createdAt: '2021-01-01',
+        updatedAt: '2021-01-01'
+      }
+    ];
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} musicAi`;
+  async createJob(createJobDto: CreateJobRequestDto): Promise<CreateJobResponseDto> {
+    return {
+      id: '123e4567-e89b-12d3-a456-426614174000'
+    };
   }
 
-  update(id: number, updateMusicAiDto: UpdateMusicAiDto) {
-    return `This action updates a #${id} musicAi`;
+  async getJob(id: string): Promise<JobDto> {
+    return {
+      id: '123e4567-e89b-12d3-a456-426614174000',
+      app: 'music-ai',
+      workflow: 'my-workflow',
+      status: JobStatus.QUEUED,
+      batchName: 'batch-2024-01',
+      workflowParams: {
+        inputUrl: 'https://example.com/input'
+      },
+      name: 'My Job',
+      createdAt: '2021-01-01',
+      startedAt: '2021-01-01',
+      completedAt: '2021-01-01'
+    };
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} musicAi`;
+  async getJobStatus(id: string): Promise<JobStatusDto> {
+    return {
+      id: '123e4567-e89b-12d3-a456-426614174000',
+      status: JobStatus.QUEUED
+    };
+  }
+
+  async getJobs(page: number, size: number): Promise<JobDto[]> {
+    return [
+      {
+        id: '123e4567-e89b-12d3-a456-426614174000',
+        app: 'music-ai',
+        workflow: 'my-workflow',
+        status: JobStatus.QUEUED,
+        batchName: 'batch-2024-01',
+        workflowParams: {
+          inputUrl: 'https://example.com/input'
+        },
+        name: 'My Job',
+        createdAt: '2021-01-01',
+        startedAt: '2021-01-01',
+        completedAt: '2021-01-01'
+      }
+    ];
+  }
+
+  async deleteJob(id: string): Promise<DeleteJobResponseDto> {
+    return {
+      id: '123e4567-e89b-12d3-a456-426614174000'
+    };
   }
 }

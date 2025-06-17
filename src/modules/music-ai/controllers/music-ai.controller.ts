@@ -1,33 +1,27 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Query } from '@nestjs/common';
 import { MusicAiService } from '../services/music-ai.service';
-import { CreateMusicAiDto, UpdateMusicAiDto } from '../dto/music-ai.dtos';
+import { UploadUrlsDto, WorkflowDto } from '../dto/music-ai.dtos';
+import { ApiBearerAuth, ApiOperation, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 
-@Controller('music-ai')
+@ApiTags('Music AI')
+@ApiBearerAuth()
+@Controller('musicai')
 export class MusicAiController {
   constructor(private readonly musicAiService: MusicAiService) { }
 
-  @Post()
-  create(@Body() createMusicAiDto: CreateMusicAiDto) {
-    return this.musicAiService.create(createMusicAiDto);
+  @Get('upload')
+  @ApiOperation({ summary: 'Get upload URLs' })
+  @ApiResponse({ status: 200, description: 'Get upload URLs', type: UploadUrlsDto, isArray: true })
+  getUploadUrls() {
+    return this.musicAiService.getUploadUrls();
   }
 
-  @Get()
-  findAll() {
-    return this.musicAiService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.musicAiService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateMusicAiDto: UpdateMusicAiDto) {
-    return this.musicAiService.update(+id, updateMusicAiDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.musicAiService.remove(+id);
+  @Get('workflows')
+  @ApiOperation({ summary: 'Get workflows' })
+  @ApiResponse({ status: 200, description: 'Get workflows', type: WorkflowDto, isArray: true })
+  @ApiQuery({ name: 'page', type: Number, required: false, example: 0 })
+  @ApiQuery({ name: 'size', type: Number, required: false, example: 100 })
+  getWorkflows(@Query('page') page: number = 0, @Query('size') size: number = 100) {
+    return this.musicAiService.getWorkflows(page, size);
   }
 }
