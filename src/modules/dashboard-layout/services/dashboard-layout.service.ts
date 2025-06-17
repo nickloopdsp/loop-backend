@@ -1,25 +1,23 @@
 import { Injectable } from '@nestjs/common';
-import { CreateDashboardLayoutDto, UpdateDashboardLayoutDto } from '../dto/dashboard-layout.dtos';
+import { DashboardLayoutDto } from '../dto/dashboard-layout.dtos';
 
 @Injectable()
 export class DashboardLayoutService {
-  create(createDashboardLayoutDto: CreateDashboardLayoutDto) {
-    return 'This action adds a new dashboardLayout';
+
+  async getDashboardLayout(userId: number): Promise<DashboardLayoutDto> {
+    return {
+      id: 1,
+      userId: userId,
+      layout: {}
+    };
   }
 
-  findAll() {
-    return `This action returns all dashboardLayout`;
+  async createDashboardLayout(createDashboardLayoutDto: any): Promise<DashboardLayoutDto> {
+    return {
+      id: 1,
+      userId: 1,
+      layout: {}
+    };
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} dashboardLayout`;
-  }
-
-  update(id: number, updateDashboardLayoutDto: UpdateDashboardLayoutDto) {
-    return `This action updates a #${id} dashboardLayout`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} dashboardLayout`;
-  }
 }

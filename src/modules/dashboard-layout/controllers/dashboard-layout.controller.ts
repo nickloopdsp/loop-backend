@@ -1,33 +1,27 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe } from '@nestjs/common';
 import { DashboardLayoutService } from '../services/dashboard-layout.service';
-import { CreateDashboardLayoutDto, UpdateDashboardLayoutDto } from '../dto/dashboard-layout.dtos';
+import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { DashboardLayoutDto } from '../dto/dashboard-layout.dtos';
 
+@ApiTags('Dashboard Layout')
+@ApiBearerAuth()
 @Controller('dashboard-layout')
 export class DashboardLayoutController {
   constructor(private readonly dashboardLayoutService: DashboardLayoutService) { }
 
+  @Get(':userId')
+  @ApiOperation({ summary: 'Get dashboard layout' })
+  @ApiResponse({ status: 200, description: 'Get dashboard layout', type: DashboardLayoutDto })
+  getDashboardLayout(@Param('userId', ParseIntPipe) userId: number) {
+    return this.dashboardLayoutService.getDashboardLayout(userId);
+  }
+
+  //post
   @Post()
-  create(@Body() createDashboardLayoutDto: CreateDashboardLayoutDto) {
-    return this.dashboardLayoutService.create(createDashboardLayoutDto);
+  @ApiOperation({ summary: 'Create dashboard layout' })
+  @ApiResponse({ status: 200, description: 'Create dashboard layout', type: DashboardLayoutDto })
+  createDashboardLayout(@Body() createDashboardLayoutDto: any) {
+    return this.dashboardLayoutService.createDashboardLayout(createDashboardLayoutDto);
   }
 
-  @Get()
-  findAll() {
-    return this.dashboardLayoutService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.dashboardLayoutService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateDashboardLayoutDto: UpdateDashboardLayoutDto) {
-    return this.dashboardLayoutService.update(+id, updateDashboardLayoutDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.dashboardLayoutService.remove(+id);
-  }
 }

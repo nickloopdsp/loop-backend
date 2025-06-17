@@ -1,8 +1,26 @@
-import { PartialType } from '@nestjs/swagger';
+import { ApiProperty } from "@nestjs/swagger";
+import { IsNumber, IsObject } from "class-validator";
 
-export class CreateDashboardLayoutDto { }
+export class DashboardLayoutDto {
+    @ApiProperty({
+        description: 'The ID of the dashboard layout',
+        example: 1
+    })
+    @IsNumber()
+    id: number;
 
-export class UpdateDashboardLayoutDto extends PartialType(CreateDashboardLayoutDto) { }
+    @ApiProperty({
+        description: 'The user ID of the dashboard layout',
+        example: 1
+    })
+    @IsNumber()
+    userId: number;
 
+    @ApiProperty({
+        description: 'The layout of the dashboard',
+        example: {}
+    })
+    @IsObject()
+    layout: unknown;
 
-
+}
