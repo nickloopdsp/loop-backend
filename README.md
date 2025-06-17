@@ -74,6 +74,8 @@ The SDK generation script will:
 | THROTTLE_LIMIT | number | No | 10 | Maximum number of requests per time window |
 | ENABLE_SWAGGER | boolean | No | true | Enable/disable Swagger API documentation |
 | ENABLE_RATELIMIT | boolean | No | true | Enable/disable Rate Limit |
+| OPENAI_API_KEY | string | Yes | - | OpenAI API key |
+| MUSICAI_API_KEY | string | Yes | - | Music AI API key |
 
 ## Running the Application
 

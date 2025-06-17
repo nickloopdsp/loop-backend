@@ -31,6 +31,14 @@ export interface RateLimitConfig {
     limit: number;
 }
 
+export interface OpenAiConfig {
+    openaiApiKey: string;
+}
+
+export interface MusicAiConfig {
+    musicAiApiKey: string;
+}
+
 export interface Configuration {
     port: number;
     apiPrefix: string;
@@ -41,4 +49,6 @@ export interface Configuration {
     throttler: RateLimitConfig;
     featureFlags: FeatureFlagsConfig;
     nodeEnv: string;
+    openai: OpenAiConfig;
+    musicAi: MusicAiConfig;
 }

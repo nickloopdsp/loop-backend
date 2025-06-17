@@ -58,4 +58,13 @@ export const validationSchema = Joi.object({
         .default(true)
         .description('Enable/disable Rate Limit'),
 
+    // OpenAI
+    OPENAI_API_KEY: Joi.string()
+        .required()
+        .description('OpenAI API key'),
+
+    // Music AI
+    MUSICAI_API_KEY: Joi.string()
+        .required()
+        .description('Music AI API key'),
 }); 
