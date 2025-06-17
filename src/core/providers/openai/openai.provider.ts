@@ -1,38 +1,37 @@
-import { Logger } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import OpenAI from 'openai';
-import { AIContextDto } from 'src/modules/chat/dto/chat.dtos';
+import { BaseAIProvider } from '../../base/base.ai.provider';
+import { AIContextDto } from '../../../modules/chat/dto/chat.dtos';
+import { AppConfigService } from 'src/config/config.service';
+import { OpenAiConfig } from 'src/config/interfaces/config.interface';
+import { AIMessage } from '../../interfaces';
 
-export interface AIMessage {
-    role: 'system' | 'user' | 'assistant';
-    content: string;
-}
-
-export interface AIProvider {
-    generateResponse(messages: AIMessage[], context?: AIContextDto): Promise<string>;
-    generateStreamingResponse?(messages: AIMessage[], context?: AIContextDto): AsyncGenerator<string>;
-}
-
-export class OpenAIService implements AIProvider {
+@Injectable()
+export class OpenAIProvider implements BaseAIProvider {
     private openai: OpenAI;
-    private readonly logger = new Logger(OpenAIService.name);
     private models: string[];
     private maxTokens: number;
     private temperature: number;
-
-    constructor(apiKey: string, model: string = 'gpt-3.5-turbo', maxTokens: number = 1000, temperature: number = 0.7) {
-        this.openai = new OpenAI({ apiKey: apiKey });
-        this.models = [model, 'gpt-4o-mini', 'gpt-3.5-turbo'];
-        this.maxTokens = maxTokens;
-        this.temperature = temperature;
+    constructor(
+        private readonly configService: AppConfigService
+    ) {
+        const openAiConfig = this.configService.get<OpenAiConfig>('openai');
+        this.openai = new OpenAI({
+            apiKey: openAiConfig.apiKey,
+        });
+        this.models = [openAiConfig.model, "gpt-4o-mini", "gpt-3.5-turbo"];
+        this.maxTokens = openAiConfig.maxTokens;
+        this.temperature = openAiConfig.temperature;
     }
 
     async generateResponse(messages: AIMessage[], context?: AIContextDto): Promise<string> {
         const systemMessage = this.buildSystemMessage(context);
         const allMessages = [
-            { role: 'system' as const, content: systemMessage },
-            ...messages
+            { role: "system" as const, content: systemMessage },
+            ...messages,
         ];
 
+        // Try each model in order until one works
         let lastError: any;
 
         for (const model of this.models) {
@@ -45,18 +44,23 @@ export class OpenAIService implements AIProvider {
                     temperature: this.temperature,
                 });
 
-                return completion.choices[0]?.message?.content || 'I apologize, but I was unable to generate a response.';
+                return (
+                    completion.choices[0]?.message?.content ||
+                    "I apologize, but I was unable to generate a response."
+                );
             } catch (error: any) {
                 console.error(`OpenAI API error with model ${model}:`, error.message);
                 lastError = error;
 
                 // If it's a quota error, don't try other models
-                if (error.code === 'insufficient_quota' || error.status === 402) {
-                    throw new Error('Your OpenAI account has insufficient credits. Please add credits at https://platform.openai.com/account/billing');
+                if (error.code === "insufficient_quota" || error.status === 402) {
+                    throw new Error(
+                        "Your OpenAI account has insufficient credits. Please add credits at https://platform.openai.com/account/billing"
+                    );
                 }
 
                 // If it's not a model not found error, throw it
-                if (error.code !== 'model_not_found') {
+                if (error.code !== "model_not_found") {
                     throw this.formatError(error, model);
                 }
 
@@ -69,13 +73,12 @@ export class OpenAIService implements AIProvider {
         throw this.formatError(lastError, this.models[this.models.length - 1]);
     }
 
-
-    async *generateStreamingResponse?(messages: AIMessage[], context?: AIContextDto): AsyncGenerator<string> {
+    async *generateStreamingResponse(messages: AIMessage[], context?: AIContextDto): AsyncGenerator<string> {
         try {
             const systemMessage = this.buildSystemMessage(context);
             const allMessages = [
-                { role: 'system' as const, content: systemMessage },
-                ...messages
+                { role: "system" as const, content: systemMessage },
+                ...messages,
             ];
 
             const stream = await this.openai.chat.completions.create({
@@ -93,9 +96,39 @@ export class OpenAIService implements AIProvider {
                 }
             }
         } catch (error) {
-            console.error('OpenAI streaming error:', error);
-            throw new Error('Failed to generate streaming response');
+            console.error("OpenAI streaming error:", error);
+            throw new Error("Failed to generate streaming response");
         }
+    }
+
+    private formatError(error: any, model: string): Error {
+        console.error("Error details:", {
+            status: error.status,
+            message: error.message,
+            code: error.code,
+            type: error.type,
+        });
+
+        // Provide more specific error messages
+        if (error.status === 404 && error.code === "model_not_found") {
+            return new Error(
+                `Model "${model}" not found. Please check your API key permissions.`
+            );
+        } else if (error.status === 401) {
+            return new Error("Invalid API key. Please check your OpenAI API key.");
+        } else if (error.status === 429 && error.code === "insufficient_quota") {
+            return new Error(
+                "Your OpenAI account has insufficient credits. Please add credits at https://platform.openai.com/account/billing"
+            );
+        } else if (error.status === 429) {
+            return new Error("Rate limit exceeded. Please try again later.");
+        } else if (error.status === 402) {
+            return new Error(
+                "Insufficient credits. Please check your OpenAI account billing."
+            );
+        }
+
+        return new Error("Failed to generate AI response. Please try again.");
     }
 
     private buildSystemMessage(context?: AIContextDto): string {
@@ -120,34 +153,11 @@ export class OpenAIService implements AIProvider {
         }
 
         if (context?.artistStats) {
-            systemMessage += `\n\nCurrent artist stats: ${JSON.stringify(context.artistStats)}`;
+            systemMessage += `\n\nCurrent artist stats: ${JSON.stringify(
+                context.artistStats
+            )}`;
         }
 
         return systemMessage;
     }
-
-    private formatError(error: any, model: string): Error {
-        console.error('Error details:', {
-            status: error.status,
-            message: error.message,
-            code: error.code,
-            type: error.type
-        });
-
-        // Provide more specific error messages
-        if (error.status === 404 && error.code === 'model_not_found') {
-            return new Error(`Model "${model}" not found. Please check your API key permissions.`);
-        } else if (error.status === 401) {
-            return new Error('Invalid API key. Please check your OpenAI API key.');
-        } else if (error.status === 429 && error.code === 'insufficient_quota') {
-            return new Error('Your OpenAI account has insufficient credits. Please add credits at https://platform.openai.com/account/billing');
-        } else if (error.status === 429) {
-            return new Error('Rate limit exceeded. Please try again later.');
-        } else if (error.status === 402) {
-            return new Error('Insufficient credits. Please check your OpenAI account billing.');
-        }
-
-        return new Error('Failed to generate AI response. Please try again.');
-    }
-
 } 

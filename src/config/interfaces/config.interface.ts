@@ -32,7 +32,10 @@ export interface RateLimitConfig {
 }
 
 export interface OpenAiConfig {
-    openaiApiKey: string;
+    apiKey: string;
+    model: string;
+    maxTokens: number;
+    temperature: number;
 }
 
 export interface MusicAiConfig {

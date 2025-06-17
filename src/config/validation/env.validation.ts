@@ -62,9 +62,20 @@ export const validationSchema = Joi.object({
     OPENAI_API_KEY: Joi.string()
         .required()
         .description('OpenAI API key'),
+    OPENAI_MODEL: Joi.string()
+        .default('gpt-3.5-turbo')
+        .description('OpenAI model'),
+    OPENAI_MAX_TOKENS: Joi.number()
+        .default(1000)
+        .description('OpenAI max tokens'),
+    OPENAI_TEMPERATURE: Joi.number()
+        .default(0.7)
+        .description('OpenAI temperature'),
 
     // Music AI
     MUSICAI_API_KEY: Joi.string()
         .required()
         .description('Music AI API key'),
+
+
 }); 

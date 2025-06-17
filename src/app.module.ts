@@ -25,9 +25,13 @@ import { SoundChartModule } from './modules/sound-chart/sound-chart.module';
     SoundChartModule,
   ],
   controllers: [AppController],
-  providers: [AppService, AppConfigService, {
-    provide: APP_FILTER,
-    useClass: AppExceptionFilter,
-  }],
+  providers: [
+    AppService,
+    AppConfigService,
+    {
+      provide: APP_FILTER,
+      useClass: AppExceptionFilter,
+    },
+  ],
 })
 export class AppModule { }
