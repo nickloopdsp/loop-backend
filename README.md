@@ -56,26 +56,10 @@ The SDK generation script will:
 
 ## Environment Variables
 
-| Variable | Type | Required | Default | Description |
-|----------|------|----------|---------|-------------|
-| NODE_ENV | string | No | development | Application environment (development, production, test) |
-| PORT | number | No | 3001 | Port number for the application server |
-| API_PREFIX | string | No | api | Prefix for all API routes |
-| API_VERSION | string | No | v1 | API version number |
-| JWT_SECRET | string | Yes | - | Secret key for JWT token generation and verification |
-| JWT_EXPIRATION | string | No | 1d | JWT token expiration time (e.g., 1d, 7d, 24h) |
-| CORS_ORIGIN | string | No | * | CORS allowed origins (use * for all origins) |
-| DB_HOST | string | No | localhost | Database host address |
-| DB_PORT | number | No | 5432 | Database port number |
-| DATABASE_USER | string | Yes | - | Database username |
-| DATABASE_PASSWORD | string | Yes | - | Database password |
-| DATABASE_NAME | string | Yes | - | Database name |
-| THROTTLE_TTL | number | No | 60 | Rate limiter time window in seconds |
-| THROTTLE_LIMIT | number | No | 10 | Maximum number of requests per time window |
-| ENABLE_SWAGGER | boolean | No | true | Enable/disable Swagger API documentation |
-| ENABLE_RATELIMIT | boolean | No | true | Enable/disable Rate Limit |
-| OPENAI_API_KEY | string | Yes | - | OpenAI API key |
-| MUSICAI_API_KEY | string | Yes | - | Music AI API key |
+For detailed information about all available environment variables and configuration options, please refer to [Env Configuration Documentation](env-docs/configuration.md).
+
+Copy the `.env.example` file to `.env` and configure the variables according to your environment:
+
 
 ## Running the Application
 
@@ -116,6 +100,7 @@ src/
 │   ├── music-ai/     # AI-powered music analysis
 │   ├── dashboard-layout/ # Dashboard UI layout management
 │   └── chat/         # Chat functionality
+│   └── openai/         # Openai provider
 └── main.ts           # Application entry point
 ```
 

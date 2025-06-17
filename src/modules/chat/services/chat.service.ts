@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { ChatRequestDto, ChatMessageResponseDto, AnalyzeRequestDto, AnalyzeResponseDto } from '../dto/chat.dtos';
 import { OpenAiConfig } from '../../../config/interfaces/config.interface';
 import { AppConfigService } from '../../../config/config.service';
-import { OpenAIProvider } from '../../../core/providers/openai/openai.provider';
+import { OpenAIProvider } from '../../openai/openai.provider';
 import { AIMessage } from '../../../core/interfaces';
 
 @Injectable()
@@ -36,18 +36,55 @@ export class ChatService {
   async *stream(chatRequestDto: ChatRequestDto) {
     const { message, conversationHistory = [], context = {} } = chatRequestDto;
 
-    return {
-      message: 'Ai Message',
-      timestamp: new Date().toISOString()
+    if (!this.openaiProvider.generateStreamingResponse) {
+      throw new Error("Streaming not supported by current AI provider");
     }
+
+    const messages: AIMessage[] = conversationHistory.map((msg) => ({
+      role: msg.sender === "user" ? "user" : "assistant",
+      content: msg.message,
+    }));
+
+    // Add the new user message
+    messages.push({ role: "user", content: message });
+
+    yield* this.openaiProvider.generateStreamingResponse(messages, context);
+
   }
 
   async analyzeStrategy(analyzeRequestDto: AnalyzeRequestDto): Promise<AnalyzeResponseDto> {
+    const { documentContent, documentType = "marketing" } = analyzeRequestDto;
+
+    const messages: AIMessage[] = [
+      {
+        role: "user",
+        content: `Please analyze this ${documentType} strategy document and provide:
+                  1. An overall score out of 100
+                  2. Key strengths (as a bullet list)
+                  3. Areas for improvement (as a bullet list)
+                  4. Strategic insights and recommendations
+                  Document content:
+                  ${documentContent}`,
+      },
+    ];
+
+    const response = await this.openaiProvider.generateResponse(messages);
+
+    //const { score, strengths, improvements, insights } = JSON.parse(response);
+
     return {
-      score: 0.8,
-      strengths: ['Strong marketing strategy', 'Good use of data'],
-      improvements: ['Improve marketing strategy', 'Use more data'],
-      insights: 'The document is a good marketing strategy'
+      score: 85, // This would be extracted from the AI response
+      strengths: [
+        "Strong creative concept with viral potential",
+        "Well-defined target audience demographics",
+        "Multi-platform approach",
+      ],
+      improvements: [
+        "Consider extending campaign duration",
+        "Include more micro-influencer partnerships",
+        "Add A/B testing for creative variations",
+      ],
+      insights: response,
     }
   }
 }
