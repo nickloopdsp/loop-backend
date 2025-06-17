@@ -24,35 +24,6 @@ export class ConfigDocsGenerator {
       markdown += `| ${key} | ${type} | ${isRequired ? 'Yes' : 'No'} | ${defaultValue} | ${description} |\n`;
     }
 
-    markdown += '\n## Configuration Sections\n\n';
-    const sections: (keyof Configuration)[] = [
-      'apiPrefix',
-      'apiVersion',
-      'throttler',
-      'database',
-      'cors',
-      'featureFlags',
-      'jwt',
-      'port',
-      'nodeEnv'
-    ];
-
-    for (const section of sections) {
-      markdown += `### ${section}\n\n`;
-      markdown += '```typescript\n';
-      markdown += `interface ${section.charAt(0).toUpperCase() + section.slice(1)}Config {\n`;
-
-      const sectionKeys = Object.keys(schema.keys[section]?.keys ?? {});
-      for (const key of sectionKeys) {
-        const field = schema.keys[section].keys[key];
-        const type = field.type;
-        const isRequired = field.flags?.presence === 'required';
-        markdown += `  ${key}${isRequired ? '' : '?'}: ${type};\n`;
-      }
-
-      markdown += '}\n```\n\n';
-    }
-
     return markdown;
   }
 } 
