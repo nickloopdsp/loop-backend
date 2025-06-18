@@ -254,8 +254,7 @@ export class JobStatusDto {
         description: 'The status of the job',
         example: 'QUEUED'
     })
-    @IsEnum(JobStatus)
-    status: JobStatus;
+    status: string;
 }
 
 export class DeleteJobResponseDto {

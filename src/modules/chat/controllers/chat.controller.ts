@@ -24,6 +24,7 @@ export class ChatController {
   @ApiResponse({ status: 401, description: 'Invalid API key' })
   @ApiResponse({ status: 429, description: 'Rate limit exceeded' })
   @ApiResponse({ status: 402, description: 'Insufficient credits' })
+  @ApiResponse({ status: 503, description: 'OpenAI service is not available' })
   message(@Body() chatRequestDto: ChatRequestDto) {
     return this.chatService.message(chatRequestDto);
   }
@@ -31,6 +32,12 @@ export class ChatController {
   @Post('stream')
   @ApiOperation({ summary: 'Stream a message to the AI' })
   @ApiResponse({ status: 200, description: 'Stream a message to the AI', type: ChatMessageResponseDto })
+  @ApiResponse({ status: 402, description: 'Insufficient credits' })
+  @ApiResponse({ status: 404, description: 'Model not found' })
+  @ApiResponse({ status: 401, description: 'Invalid API key' })
+  @ApiResponse({ status: 429, description: 'Rate limit exceeded' })
+  @ApiResponse({ status: 402, description: 'Insufficient credits' })
+  @ApiResponse({ status: 503, description: 'OpenAI service is not available' })
   async stream(@Body() chatRequestDto: ChatRequestDto, @Res() res: Response) {
     try {
       res.setHeader("Content-Type", "text/event-stream");
@@ -54,6 +61,12 @@ export class ChatController {
   @Post('analyze-strategy')
   @ApiOperation({ summary: 'Analyze a strategy' })
   @ApiResponse({ status: 200, description: 'Analyze a strategy', type: AnalyzeResponseDto })
+  @ApiResponse({ status: 402, description: 'Insufficient credits' })
+  @ApiResponse({ status: 404, description: 'Model not found' })
+  @ApiResponse({ status: 401, description: 'Invalid API key' })
+  @ApiResponse({ status: 429, description: 'Rate limit exceeded' })
+  @ApiResponse({ status: 402, description: 'Insufficient credits' })
+  @ApiResponse({ status: 503, description: 'OpenAI service is not available' })
   analyzeStrategy(@Body() analyzeRequestDto: AnalyzeRequestDto) {
     return this.chatService.analyzeStrategy(analyzeRequestDto);
   }

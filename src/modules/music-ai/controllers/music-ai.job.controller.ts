@@ -1,33 +1,33 @@
 import { Controller, Get, Post, Body, Delete, Param, Query, ParseUUIDPipe } from '@nestjs/common';
-import { MusicAiService } from '../services/music-ai.service';
 import { CreateJobRequestDto, CreateJobResponseDto, DeleteJobResponseDto, JobDto, JobStatusDto } from '../dto/music-ai.dtos';
 import { ApiBearerAuth, ApiOperation, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { MusicAiJobService } from '../services/music-ai.job.service';
 
 @ApiTags('Music AI Jobs')
 @ApiBearerAuth()
 @Controller('musicai/jobs')
-export class JobController {
-    constructor(private readonly musicAiService: MusicAiService) { }
+export class MusicAiJobController {
+    constructor(private readonly musicAiJobService: MusicAiJobService) { }
 
     @Post()
     @ApiOperation({ summary: 'Create a job' })
     @ApiResponse({ status: 200, description: 'Create a job', type: CreateJobResponseDto })
     createJob(@Body() createJobDto: CreateJobRequestDto) {
-        return this.musicAiService.createJob(createJobDto);
+        return this.musicAiJobService.createJob(createJobDto);
     }
 
     @Get(':id')
     @ApiOperation({ summary: 'Get a job' })
     @ApiResponse({ status: 200, description: 'Get a job', type: JobDto })
     getJob(@Param('id', ParseUUIDPipe) id: string) {
-        return this.musicAiService.getJob(id);
+        return this.musicAiJobService.getJob(id);
     }
 
     @Get(':id/status')
     @ApiOperation({ summary: 'Get a job status' })
     @ApiResponse({ status: 200, description: 'Get a job status', type: JobStatusDto })
     getJobStatus(@Param('id', ParseUUIDPipe) id: string) {
-        return this.musicAiService.getJobStatus(id);
+        return this.musicAiJobService.getJobStatus(id);
     }
 
     @Get()
@@ -45,13 +45,13 @@ export class JobController {
         @Query('page') page: number = 0,
         @Query('size') size: number = 100
     ) {
-        return this.musicAiService.getJobs(page, size);
+        return this.musicAiJobService.getJobs(status, workflow, batchName, page, size);
     }
 
     @Delete(':id')
     @ApiOperation({ summary: 'Delete a job' })
     @ApiResponse({ status: 200, description: 'Delete a job', type: DeleteJobResponseDto })
     deleteJob(@Param('id', ParseUUIDPipe) id: string) {
-        return this.musicAiService.deleteJob(id);
+        return this.musicAiJobService.deleteJob(id);
     }
 } 

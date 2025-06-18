@@ -74,8 +74,12 @@ export const validationSchema = Joi.object({
 
     // Music AI
     MUSICAI_API_KEY: Joi.string()
-        .required()
+        .allow('')
         .description('Music AI API key'),
+    MUSICAI_BASE_URL: Joi.string()
+        .allow('')
+        .default('')
+        .description('Music AI base URL'),
 
 
 }); 

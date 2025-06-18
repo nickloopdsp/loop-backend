@@ -39,7 +39,9 @@ export interface OpenAiConfig {
 }
 
 export interface MusicAiConfig {
-    musicAiApiKey: string;
+    apiKey: string;
+    baseUrl: string;
+
 }
 
 export interface Configuration {

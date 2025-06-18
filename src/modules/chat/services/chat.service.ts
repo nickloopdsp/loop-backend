@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { ChatRequestDto, ChatMessageResponseDto, AnalyzeRequestDto, AnalyzeResponseDto } from '../dto/chat.dtos';
-import { OpenAIProvider } from '../../openai/openai.provider';
+import { OpenAIProvider } from '../../ai/openai.provider';
 import { AIMessage } from '../../../core/interfaces';
 import { PinoLogger } from 'nestjs-pino';
 
@@ -23,10 +23,6 @@ export class ChatService {
 
   async message(chatRequestDto: ChatRequestDto): Promise<ChatMessageResponseDto> {
 
-    if (!this.openaiProvider) {
-      this.logger.error("AI service not available. Please configure OPENAI_API_KEY.");
-      throw new Error("AI service not available. Please configure OPENAI_API_KEY.");
-    }
     const { message, conversationHistory = [], context = {} } = chatRequestDto;
 
     const messages: AIMessage[] = conversationHistory.map((msg) => ({
@@ -45,10 +41,6 @@ export class ChatService {
   }
 
   async *stream(chatRequestDto: ChatRequestDto) {
-    if (!this.openaiProvider) {
-      this.logger.error("AI service not available. Please configure OPENAI_API_KEY.");
-      throw new Error("AI service not available. Please configure OPENAI_API_KEY.");
-    }
     const { message, conversationHistory = [], context = {} } = chatRequestDto;
 
     if (!this.openaiProvider.generateStreamingResponse) {
@@ -68,10 +60,7 @@ export class ChatService {
   }
 
   async analyzeStrategy(analyzeRequestDto: AnalyzeRequestDto): Promise<AnalyzeResponseDto> {
-    if (!this.openaiProvider) {
-      this.logger.error("AI service not available. Please configure OPENAI_API_KEY.");
-      throw new Error("AI service not available. Please configure OPENAI_API_KEY.");
-    }
+
     const { documentContent, documentType = "marketing" } = analyzeRequestDto;
 
     const messages: AIMessage[] = [

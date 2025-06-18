@@ -1,11 +1,18 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, RequestMethod } from '@nestjs/common';
 import { ChatService } from './services/chat.service';
 import { ChatController } from './controllers/chat.controller';
-import { OpenAIModule } from '../openai/openai.module';
+import { AIModule } from '../ai/ai.module';
+import { OpenAIMiddleware } from 'src/core/middlewares';
 
 @Module({
-  imports: [OpenAIModule],
+  imports: [AIModule],
   controllers: [ChatController],
   providers: [ChatService],
 })
-export class ChatModule { }
+export class ChatModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(OpenAIMiddleware)
+      .forRoutes(ChatController);
+  }
+}

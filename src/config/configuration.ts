@@ -44,7 +44,8 @@ export default (): Configuration => {
             temperature: parseFloat(process.env.OPENAI_TEMPERATURE || '0.7'),
         },
         musicAi: {
-            musicAiApiKey: process.env.MUSICAI_API_KEY || '',
+            apiKey: process.env.MUSICAI_API_KEY || '',
+            baseUrl: process.env.MUSICAI_BASE_URL || '',
         },
     };
 }; 
