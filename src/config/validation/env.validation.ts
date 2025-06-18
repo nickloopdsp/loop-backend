@@ -60,7 +60,7 @@ export const validationSchema = Joi.object({
 
     // OpenAI
     OPENAI_API_KEY: Joi.string()
-        .required()
+        .allow('')
         .description('OpenAI API key'),
     OPENAI_MODEL: Joi.string()
         .default('gpt-3.5-turbo')

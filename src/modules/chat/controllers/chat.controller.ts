@@ -3,15 +3,17 @@ import { ChatService } from '../services/chat.service';
 import { AnalyzeRequestDto, AnalyzeResponseDto, ChatMessageResponseDto, ChatRequestDto } from '../dto/chat.dtos';
 import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Response } from 'express';
-import { LoggerService } from '../../../core/logger/logger.service';
+import { PinoLogger } from 'nestjs-pino';
 
 @ApiTags('Chat')
 @ApiBearerAuth()
 @Controller('chat')
 export class ChatController {
   constructor(private readonly chatService: ChatService,
-    private readonly logger: LoggerService
-  ) { }
+    private readonly logger: PinoLogger
+  ) {
+    this.logger.setContext(ChatController.name);
+  }
 
 
   @Post('message')

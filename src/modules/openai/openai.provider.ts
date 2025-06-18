@@ -1,31 +1,28 @@
-import { Injectable } from '@nestjs/common';
 import OpenAI from 'openai';
 import { BaseAIProvider } from '../../core/base/base.ai.provider';
 import { AIContextDto } from '../chat/dto/chat.dtos';
-import { AppConfigService } from '../../config/config.service';
-import { OpenAiConfig } from '../../config/interfaces/config.interface';
 import { AIMessage } from '../../core/interfaces';
-import { LoggerService } from '../../core/logger/logger.service';
+import { PinoLogger } from 'nestjs-pino';
 
-@Injectable()
+export const OPENAI_PROVIDER = 'OpenAiProvider';
+
 export class OpenAIProvider implements BaseAIProvider {
     private readonly openai: OpenAI;
     private readonly models: string[];
-    private readonly maxTokens: number;
-    private readonly temperature: number;
 
     constructor(
-        private readonly configService: AppConfigService,
-        private readonly logger: LoggerService,
+        private readonly logger: PinoLogger,
+        private readonly apiKey: string,
+        private readonly model: string = "gpt-3.5-turbo",
+        private readonly maxTokens: number = 1000,
+        private readonly temperature: number = 0.7
     ) {
-        const openAiConfig = this.configService.get<OpenAiConfig>('openai');
+
         this.openai = new OpenAI({
-            apiKey: openAiConfig.apiKey,
+            apiKey: this.apiKey,
             timeout: 30000, // 30 seconds timeout
         });
-        this.models = [openAiConfig.model, "gpt-4o-mini", "gpt-3.5-turbo"];
-        this.maxTokens = openAiConfig.maxTokens;
-        this.temperature = openAiConfig.temperature;
+        this.models = [this.model, "gpt-4o-mini", "gpt-3.5-turbo"];
     }
 
     async generateResponse(messages: AIMessage[], context?: AIContextDto): Promise<string> {
@@ -38,7 +35,7 @@ export class OpenAIProvider implements BaseAIProvider {
 
         for (const model of this.models) {
             try {
-                this.logger.log(`Attempting OpenAI API call with model: ${model}`);
+                this.logger.info(`Attempting OpenAI API call with model: ${model}`);
                 const completion = await this.openai.chat.completions.create({
                     model,
                     messages: allMessages,
@@ -59,7 +56,7 @@ export class OpenAIProvider implements BaseAIProvider {
                     throw this.formatError(error, model);
                 }
 
-                this.logger.log(`Model ${model} not available, trying next model...`);
+                this.logger.info(`Model ${model} not available, trying next model...`);
             }
         }
 

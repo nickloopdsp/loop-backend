@@ -1,10 +1,12 @@
 import { ExceptionFilter, Catch, ArgumentsHost, HttpException, HttpStatus } from '@nestjs/common';
 import { Request, Response } from 'express';
-import { LoggerService } from '../logger/logger.service';
+import { PinoLogger } from 'nestjs-pino';
 
 @Catch()
 export class AppExceptionFilter implements ExceptionFilter {
-    constructor(private readonly logger: LoggerService) { }
+    constructor(private readonly logger: PinoLogger) {
+        this.logger.setContext(AppExceptionFilter.name);
+    }
 
     catch(exception: unknown, host: ArgumentsHost) {
         const ctx = host.switchToHttp();
