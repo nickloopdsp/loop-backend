@@ -8,10 +8,10 @@ import { LoggerModule } from './core/logger/logger.module';
 import { ThrottlerConfigModule } from './core/throttler/throttler.module';
 import { ConfigModule } from './config/config.module';
 import { ChatModule } from './modules/chat/chat.module';
-import { DashboardLayoutModule } from './modules/dashboard-layout/dashboard-layout.module';
-import { MusicAiModule } from './modules/music-ai/music-ai.module';
+import { DashboardLayoutModule } from './modules/dashboardlayout/dashboard-layout.module';
+import { MusicAiModule } from './modules/musicai/music-ai.module';
 import { MockModule } from './modules/mock/mock.module';
-import { SoundChartModule } from './modules/sound-chart/sound-chart.module';
+import { SoundChartModule } from './modules/soundchart/sound-chart.module';
 
 @Module({
   imports: [

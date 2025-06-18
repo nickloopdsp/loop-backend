@@ -1,4 +1,4 @@
-import { AIContextDto } from "../../services/openai/dtos/openai.dto";
+import { AIContextDto } from "../../integrations/openai/dtos/openai.dto";
 import { AIMessage } from "../interfaces";
 
 export abstract class BaseAIProvider {

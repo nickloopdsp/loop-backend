@@ -1,6 +1,6 @@
 import { HttpService } from "@nestjs/axios";
 import { PinoLogger } from "nestjs-pino";
-import { UploadUrlsDto, WorkflowDto, WorkflowParamDto, JobDto } from "../../modules/music-ai/dto/music-ai.dtos";
+import { UploadUrlsDto, WorkflowDto, WorkflowParamDto, JobDto } from "../../modules/musicai/dto/music-ai.dtos";
 
 export const MUSIC_AI_PROVIDER = 'MUSIC_AI_PROVIDER';
 

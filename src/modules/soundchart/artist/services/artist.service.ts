@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { ArtistAudienceDto, ArtistConcertDto, ArtistStatsDto, SoundchartArtistDto, SOUNDCHARTS_PROVIDER, SoundchartsArtistSearchResponse, SoundChartServiceProvider } from '../../../../services/soundchart';
+import { ArtistAudienceDto, ArtistConcertDto, ArtistStatsDto, SoundchartArtistDto, SOUNDCHARTS_PROVIDER, SoundchartsArtistSearchResponse, SoundChartServiceProvider } from '../../../../integrations/soundchart';
 
 @Injectable()
 export class ArtistService {

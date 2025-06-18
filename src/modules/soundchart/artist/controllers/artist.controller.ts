@@ -1,6 +1,6 @@
 import { Controller, Get, Param, Query, ParseUUIDPipe } from '@nestjs/common';
 import { ArtistService } from '../services/artist.service';
-import { ArtistAudienceDto, ArtistConcertDto, ArtistStatsDto, SoundchartArtistDto, SoundchartsArtistSearchResponse } from '../../../../services/soundchart';
+import { ArtistAudienceDto, ArtistConcertDto, ArtistStatsDto, SoundchartArtistDto, SoundchartsArtistSearchResponse } from '../../../../integrations/soundchart';
 import { ApiBearerAuth, ApiOperation, ApiParam, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 @ApiTags('Sound Chart Artist')

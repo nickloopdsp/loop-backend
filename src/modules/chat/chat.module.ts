@@ -1,7 +1,7 @@
 import { MiddlewareConsumer, Module } from '@nestjs/common';
 import { ChatService } from './services/chat.service';
 import { ChatController } from './controllers/chat.controller';
-import { OpenAIModule, OpenAIMiddleware } from '../../services/openai';
+import { OpenAIModule, OpenAIMiddleware } from '../../integrations/openai';
 
 @Module({
   imports: [OpenAIModule],

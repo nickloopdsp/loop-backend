@@ -1,6 +1,6 @@
 import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
 import { IsArray, IsEnum, IsNumber, IsOptional, IsString } from "class-validator";
-import { AIContextDto } from "../../../services/openai/dtos/openai.dto";
+import { AIContextDto } from "../../../integrations/openai/dtos/openai.dto";
 
 
 export class ChatMessageResponseDto {

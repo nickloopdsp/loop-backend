@@ -3,7 +3,7 @@ import { MusicAiController } from './controllers/music-ai.controller';
 import { MusicAiJobController } from './controllers/music-ai.job.controller';
 import { MusicAiService } from './services/music-ai.service';
 import { MusicAiJobService } from './services/music-ai.job.service';
-import { MusicAiServiceModule, MusicAiServiceMiddleware } from '../../services/music-ai';
+import { MusicAiServiceModule, MusicAiServiceMiddleware } from '../../integrations/musicai';
 
 @Module({
   imports: [MusicAiServiceModule],

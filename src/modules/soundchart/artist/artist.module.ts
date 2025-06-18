@@ -1,7 +1,7 @@
 import { MiddlewareConsumer, Module } from '@nestjs/common';
 import { ArtistService } from './services/artist.service';
 import { ArtistController } from './controllers/artist.controller';
-import { SoundChartServiceMiddleware, SoundChartServiceModule } from '../../../services/soundchart';
+import { SoundChartServiceMiddleware, SoundChartServiceModule } from '../../../integrations/soundchart';
 
 @Module({
   imports: [SoundChartServiceModule],

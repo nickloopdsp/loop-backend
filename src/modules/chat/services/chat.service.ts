@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { ChatRequestDto, ChatMessageResponseDto, AnalyzeRequestDto, AnalyzeResponseDto } from '../dto/chat.dtos';
-import { OPENAI_PROVIDER, OpenAIProvider } from '../../../services/openai';
+import { OPENAI_PROVIDER, OpenAIProvider } from '../../../integrations/openai';
 import { AIMessage } from '../../../core/interfaces';
 import { PinoLogger } from 'nestjs-pino';
 
