@@ -1,8 +1,14 @@
-import { Injectable } from '@nestjs/common';
-import { ArtistAudienceDto, ArtistConcertDto, ArtistStatsDto, SoundchartArtistDto, SoundchartsArtistSearchResponse } from '../dto/artist.dtos';
+import { Inject, Injectable } from '@nestjs/common';
+import { ArtistAudienceDto, ArtistConcertDto, ArtistStatsDto, SoundchartArtistDto, SOUNDCHARTS_PROVIDER, SoundchartsArtistSearchResponse, SoundChartServiceProvider } from '../../../../services/soundchart';
 
 @Injectable()
 export class ArtistService {
+
+  constructor(
+    @Inject(SOUNDCHARTS_PROVIDER)
+    private readonly soundChartServiceProvider: SoundChartServiceProvider) {
+
+  }
 
   async search(q: string, limit: number = 10): Promise<SoundchartsArtistSearchResponse> {
     return {

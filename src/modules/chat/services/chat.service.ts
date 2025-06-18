@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { ChatRequestDto, ChatMessageResponseDto, AnalyzeRequestDto, AnalyzeResponseDto } from '../dto/chat.dtos';
-import { OpenAIProvider } from '../../../services/openai/openai.provider';
+import { OPENAI_PROVIDER, OpenAIProvider } from '../../../services/openai';
 import { AIMessage } from '../../../core/interfaces';
 import { PinoLogger } from 'nestjs-pino';
 
@@ -9,16 +9,11 @@ export class ChatService {
 
 
   constructor(
-    @Inject('OpenAiProvider')
+    @Inject(OPENAI_PROVIDER)
     private readonly openaiProvider: OpenAIProvider,
     private readonly logger: PinoLogger
   ) {
     this.logger.setContext(ChatService.name);
-    if (!openaiProvider) {
-      this.logger.warn("AI service not initialized - no API key found");
-    } else {
-      this.logger.info("AI service initialized successfully");
-    }
   }
 
   async message(chatRequestDto: ChatRequestDto): Promise<ChatMessageResponseDto> {

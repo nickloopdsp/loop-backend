@@ -2,8 +2,7 @@ import { Module } from '@nestjs/common';
 import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler';
 import { APP_GUARD } from '@nestjs/core';
 import { ConfigModule } from '@nestjs/config';
-import { AppConfigService } from '../../config/config.service';
-import { FeatureFlagsConfig, RateLimitConfig } from '../../config/interfaces/config.interface';
+import { AppConfigService, FeatureFlagsConfig, RateLimitConfig } from '../../config';
 
 @Module({
     imports: [

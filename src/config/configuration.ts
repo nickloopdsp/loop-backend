@@ -47,5 +47,10 @@ export default (): Configuration => {
             apiKey: process.env.MUSICAI_API_KEY || '',
             baseUrl: process.env.MUSICAI_BASE_URL || '',
         },
+        soundChart: {
+            apiKey: process.env.SOUNDCHARTS_API_KEY || '',
+            baseUrl: process.env.SOUNDCHARTS_API_BASE_URL || '',
+            appId: process.env.SOUNDCHARTS_APP_ID || '',
+        },
     };
 }; 

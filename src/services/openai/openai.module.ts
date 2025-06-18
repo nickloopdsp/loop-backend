@@ -1,10 +1,8 @@
 import { Module } from "@nestjs/common";
 import { OPENAI_PROVIDER, OpenAIProvider } from "./openai.provider";
-import { AppConfigService } from "../../config/config.service";
-import { OpenAiConfig } from "../../config/interfaces/config.interface";
-import { BaseAIProvider } from "src/core/base";
+import { AppConfigService, OpenAiConfig, ConfigModule } from "../../config";
+import { BaseAIProvider } from "../../core/base";
 import { PinoLogger } from "nestjs-pino";
-import { ConfigModule } from "../../config/config.module";
 
 @Module({
     imports: [ConfigModule],
@@ -23,6 +21,8 @@ import { ConfigModule } from "../../config/config.module";
                 if (!openAiConfig.model) {
                     logger.warn('OpenAI model is not configured. Using default model: gpt-3.5-turbo');
                 }
+
+                logger.info("OpenAI service initialized successfully");
 
                 return new OpenAIProvider(
                     logger,

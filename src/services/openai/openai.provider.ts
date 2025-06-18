@@ -25,6 +25,7 @@ export class OpenAIProvider implements BaseAIProvider {
         this.models = [this.model, "gpt-4o-mini", "gpt-3.5-turbo"];
     }
 
+
     async generateResponse(messages: AIMessage[], context?: AIContextDto): Promise<string> {
         const systemMessage = this.buildSystemMessage(context);
         const allMessages = [

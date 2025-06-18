@@ -1,10 +1,8 @@
 import { Module } from "@nestjs/common";
 import { MUSIC_AI_PROVIDER, MusicAiServiceProvider } from "./music-ai.service.provider";
 import { HttpModule, HttpService } from "@nestjs/axios";
-import { ConfigModule } from "../../config/config.module";
-import { AppConfigService } from "src/config/config.service";
+import { ConfigModule, AppConfigService, MusicAiConfig } from "../../config";
 import { PinoLogger } from "nestjs-pino";
-import { MusicAiConfig } from "src/config/interfaces/config.interface";
 
 @Module({
     imports: [HttpModule, ConfigModule],
@@ -12,7 +10,7 @@ import { MusicAiConfig } from "src/config/interfaces/config.interface";
         inject: [AppConfigService, PinoLogger, HttpService],
         provide: MUSIC_AI_PROVIDER,
         useFactory: (configService: AppConfigService, logger: PinoLogger, httpService: HttpService): MusicAiServiceProvider | undefined => {
-            logger.setContext(MusicAiServiceProvider.name);
+            logger.setContext(MusicAiServiceModule.name);
             const musicAiConfig = configService.get<MusicAiConfig>('musicAi');
             if (!musicAiConfig.apiKey) {
                 logger.warn('Music AI API key not found');

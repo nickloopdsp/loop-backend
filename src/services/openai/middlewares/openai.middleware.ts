@@ -1,8 +1,8 @@
-import { BadRequestException, Inject, Injectable, NestMiddleware, ServiceUnavailableException } from "@nestjs/common";
+import { Inject, Injectable, NestMiddleware, ServiceUnavailableException } from "@nestjs/common";
 
 import { NextFunction, Request, Response } from "express";
 import { PinoLogger } from "nestjs-pino";
-import { OPENAI_PROVIDER, OpenAIProvider } from "./../openai.provider";
+import { OPENAI_PROVIDER, OpenAIProvider } from "../openai.provider";
 
 @Injectable()
 export class OpenAIMiddleware implements NestMiddleware {
@@ -12,7 +12,6 @@ export class OpenAIMiddleware implements NestMiddleware {
         private readonly openaiProvider: OpenAIProvider | undefined
     ) {
         this.logger.setContext(OpenAIMiddleware.name);
-        this.logger.info('OpenAIMiddleware initialized');
     }
 
     use(req: Request, res: Response, next: NextFunction) {

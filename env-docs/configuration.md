@@ -22,8 +22,12 @@ This document describes all available configuration options for the application.
 | THROTTLE_LIMIT | number | No | 10 | Maximum number of requests per time window |
 | ENABLE_SWAGGER | boolean | No | true | Enable/disable Swagger API documentation |
 | ENABLE_RATELIMIT | boolean | No | true | Enable/disable Rate Limit |
-| OPENAI_API_KEY | string | Yes | - | OpenAI API key |
+| OPENAI_API_KEY | string | No | - | OpenAI API key |
 | OPENAI_MODEL | string | No | gpt-3.5-turbo | OpenAI model |
 | OPENAI_MAX_TOKENS | number | No | 1000 | OpenAI max tokens |
 | OPENAI_TEMPERATURE | number | No | 0.7 | OpenAI temperature |
-| MUSICAI_API_KEY | string | Yes | - | Music AI API key |
+| MUSICAI_API_KEY | string | No | - | Music AI API key |
+| MUSICAI_BASE_URL | string | No |  | Music AI base URL |
+| SOUNDCHARTS_API_BASE_URL | string | No |  | SoundChart API base URL |
+| SOUNDCHARTS_APP_ID | string | No | LOOP_A1DFF434 | SoundChart app ID |
+| SOUNDCHARTS_API_KEY | string | No |  | SoundChart API key |

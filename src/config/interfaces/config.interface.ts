@@ -44,6 +44,12 @@ export interface MusicAiConfig {
 
 }
 
+export interface SoundChartConfig {
+    apiKey: string;
+    baseUrl: string;
+    appId: string;
+}
+
 export interface Configuration {
     port: number;
     apiPrefix: string;
@@ -56,4 +62,5 @@ export interface Configuration {
     nodeEnv: string;
     openai: OpenAiConfig;
     musicAi: MusicAiConfig;
+    soundChart: SoundChartConfig;
 }

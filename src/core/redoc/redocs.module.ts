@@ -1,9 +1,6 @@
 import { Module, INestApplication } from '@nestjs/common';
 import { SwaggerModule as NestSwaggerModule, DocumentBuilder } from '@nestjs/swagger';
-import { writeFileSync } from 'fs';
-import { join } from 'path';
-import { AppConfigService } from '../../config/config.service';
-import { FeatureFlagsConfig } from '../../config/interfaces/config.interface';
+import { AppConfigService, FeatureFlagsConfig } from '../../config';
 import { Request, Response } from 'express';
 
 @Module({})

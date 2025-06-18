@@ -80,4 +80,17 @@ export const validationSchema = Joi.object({
         .allow('')
         .default('')
         .description('Music AI base URL'),
+
+    SOUNDCHARTS_API_BASE_URL: Joi.string()
+        .allow('')
+        .default('')
+        .description('SoundChart API base URL'),
+    SOUNDCHARTS_APP_ID: Joi.string()
+        .allow('')
+        .default('LOOP_A1DFF434')
+        .description('SoundChart app ID'),
+    SOUNDCHARTS_API_KEY: Joi.string()
+        .allow('')
+        .default('')
+        .description('SoundChart API key'),
 }); 
