@@ -1,4 +1,3 @@
-import { Configuration } from '../interfaces/config.interface';
 import { validationSchema } from '../validation/env.validation';
 
 export class ConfigDocsGenerator {

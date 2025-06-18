@@ -1,5 +1,3 @@
-//want to create the check openai provider is initialized middleware
-
 import { BadRequestException, Inject, Injectable, NestMiddleware, ServiceUnavailableException } from "@nestjs/common";
 import { OPENAI_PROVIDER, OpenAIProvider } from "../../modules/ai/openai.provider";
 import { NextFunction, Request, Response } from "express";

@@ -5,13 +5,10 @@ import { OpenAiConfig } from "../../config/interfaces/config.interface";
 import { BaseAIProvider } from "src/core/base";
 import { ConfigModule } from "@nestjs/config";
 import { PinoLogger } from "nestjs-pino";
-import { HttpModule } from "@nestjs/axios";
-import { MusicAiProvider } from "./musicai.provider";
 
 @Module({
-    imports: [ConfigModule, HttpModule],
+    imports: [ConfigModule],
     providers: [
-        MusicAiProvider,
         {
             inject: [AppConfigService, PinoLogger],
             provide: OPENAI_PROVIDER,
@@ -37,6 +34,6 @@ import { MusicAiProvider } from "./musicai.provider";
             }
         }
     ],
-    exports: [OPENAI_PROVIDER, MusicAiProvider],
+    exports: [OPENAI_PROVIDER],
 })
 export class AIModule { }

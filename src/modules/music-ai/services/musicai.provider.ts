@@ -1,8 +1,8 @@
 import { HttpService } from "@nestjs/axios";
 import { Injectable } from "@nestjs/common";
-import { AppConfigService } from "../../config/config.service";
-import { MusicAiConfig } from "../../config/interfaces/config.interface";
-import { JobDto, UploadUrlsDto, WorkflowDto, WorkflowParamDto } from "../music-ai/dto/music-ai.dtos";
+import { AppConfigService } from "../../../config/config.service";
+import { MusicAiConfig } from "../../../config/interfaces/config.interface";
+import { JobDto, UploadUrlsDto, WorkflowDto, WorkflowParamDto } from "../dto/music-ai.dtos";
 import { PinoLogger } from "nestjs-pino";
 
 

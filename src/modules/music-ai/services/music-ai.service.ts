@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { UploadUrlsDto, WorkflowDto } from '../dto/music-ai.dtos';
-import { MusicAiProvider } from '../../ai/musicai.provider';
+import { MusicAiProvider } from './musicai.provider';
 
 @Injectable()
 export class MusicAiService {
