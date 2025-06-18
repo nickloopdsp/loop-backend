@@ -1,5 +1,6 @@
 import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
-import { IsArray, IsEnum, IsNumber, IsObject, IsOptional, IsString } from "class-validator";
+import { IsArray, IsEnum, IsNumber, IsOptional, IsString } from "class-validator";
+import { AIContextDto } from "../../../services/openai/dtos/openai.dto";
 
 
 export class ChatMessageResponseDto {
@@ -52,31 +53,6 @@ export class ChatHistoryDto {
     timestamp: string;
 }
 
-export class AIContextDto {
-    @ApiPropertyOptional({
-        description: 'The name of the artist',
-        example: 'Alex'
-    })
-    @IsString()
-    @IsOptional()
-    artistName?: string;
-
-    @ApiPropertyOptional({
-        description: 'The stats of the artist',
-        example: {}
-    })
-    @IsObject()
-    @IsOptional()
-    artistStats?: any;
-
-    @ApiPropertyOptional({
-        description: 'The conversation history',
-        example: []
-    })
-    @IsArray()
-    conversationHistory?: ChatHistoryDto[];
-
-}
 
 export class ChatRequestDto {
     @ApiProperty({

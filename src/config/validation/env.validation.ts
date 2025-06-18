@@ -80,6 +80,4 @@ export const validationSchema = Joi.object({
         .allow('')
         .default('')
         .description('Music AI base URL'),
-
-
 }); 

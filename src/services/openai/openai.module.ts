@@ -3,8 +3,8 @@ import { OPENAI_PROVIDER, OpenAIProvider } from "./openai.provider";
 import { AppConfigService } from "../../config/config.service";
 import { OpenAiConfig } from "../../config/interfaces/config.interface";
 import { BaseAIProvider } from "src/core/base";
-import { ConfigModule } from "@nestjs/config";
 import { PinoLogger } from "nestjs-pino";
+import { ConfigModule } from "../../config/config.module";
 
 @Module({
     imports: [ConfigModule],
@@ -13,7 +13,7 @@ import { PinoLogger } from "nestjs-pino";
             inject: [AppConfigService, PinoLogger],
             provide: OPENAI_PROVIDER,
             useFactory: (configService: AppConfigService, logger: PinoLogger): BaseAIProvider | undefined => {
-                logger.setContext(AIModule.name);
+                logger.setContext(OpenAIModule.name);
                 const openAiConfig = configService.get<OpenAiConfig>('openai');
                 if (!openAiConfig?.apiKey) {
                     logger.warn('OpenAI API key is not configured. AI features will be disabled.');
@@ -36,4 +36,4 @@ import { PinoLogger } from "nestjs-pino";
     ],
     exports: [OPENAI_PROVIDER],
 })
-export class AIModule { }
+export class OpenAIModule { }

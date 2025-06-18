@@ -12,6 +12,7 @@ export class MusicAiJobController {
     @Post()
     @ApiOperation({ summary: 'Create a job' })
     @ApiResponse({ status: 200, description: 'Create a job', type: CreateJobResponseDto })
+    @ApiResponse({ status: 503, description: 'Music AI service is not available.' })
     createJob(@Body() createJobDto: CreateJobRequestDto) {
         return this.musicAiJobService.createJob(createJobDto);
     }
@@ -19,6 +20,7 @@ export class MusicAiJobController {
     @Get(':id')
     @ApiOperation({ summary: 'Get a job' })
     @ApiResponse({ status: 200, description: 'Get a job', type: JobDto })
+    @ApiResponse({ status: 503, description: 'Music AI service is not available.' })
     getJob(@Param('id', ParseUUIDPipe) id: string) {
         return this.musicAiJobService.getJob(id);
     }
@@ -26,6 +28,7 @@ export class MusicAiJobController {
     @Get(':id/status')
     @ApiOperation({ summary: 'Get a job status' })
     @ApiResponse({ status: 200, description: 'Get a job status', type: JobStatusDto })
+    @ApiResponse({ status: 503, description: 'Music AI service is not available.' })
     getJobStatus(@Param('id', ParseUUIDPipe) id: string) {
         return this.musicAiJobService.getJobStatus(id);
     }
@@ -33,6 +36,7 @@ export class MusicAiJobController {
     @Get()
     @ApiOperation({ summary: 'Get jobs' })
     @ApiResponse({ status: 200, description: 'Get jobs', type: JobDto, isArray: true })
+    @ApiResponse({ status: 503, description: 'Music AI service is not available.' })
     @ApiQuery({ name: 'status', type: String, required: false, example: 'QUEUED', isArray: true })
     @ApiQuery({ name: 'workflow', type: String, required: false, example: 'my-workflow', isArray: true })
     @ApiQuery({ name: 'batchName', type: String, required: false, example: 'batch-2024-01', isArray: true })
@@ -51,6 +55,7 @@ export class MusicAiJobController {
     @Delete(':id')
     @ApiOperation({ summary: 'Delete a job' })
     @ApiResponse({ status: 200, description: 'Delete a job', type: DeleteJobResponseDto })
+    @ApiResponse({ status: 503, description: 'Music AI service is not available.' })
     deleteJob(@Param('id', ParseUUIDPipe) id: string) {
         return this.musicAiJobService.deleteJob(id);
     }

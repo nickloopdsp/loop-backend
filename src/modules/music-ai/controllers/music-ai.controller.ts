@@ -12,6 +12,7 @@ export class MusicAiController {
   @Get('upload')
   @ApiOperation({ summary: 'Get upload URLs' })
   @ApiResponse({ status: 200, description: 'Get upload URLs', type: UploadUrlsDto, isArray: true })
+  @ApiResponse({ status: 503, description: 'Music AI service is not available.' })
   getUploadUrls() {
     return this.musicAiService.getUploadUrls();
   }
@@ -19,6 +20,7 @@ export class MusicAiController {
   @Get('workflows')
   @ApiOperation({ summary: 'Get workflows' })
   @ApiResponse({ status: 200, description: 'Get workflows', type: WorkflowDto, isArray: true })
+  @ApiResponse({ status: 503, description: 'Music AI service is not available.' })
   @ApiQuery({ name: 'page', type: Number, required: false, example: 0 })
   @ApiQuery({ name: 'size', type: Number, required: false, example: 100 })
   getWorkflows(@Query('page') page: number = 0, @Query('size') size: number = 100) {

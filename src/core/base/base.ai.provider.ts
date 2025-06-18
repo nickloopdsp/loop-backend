@@ -1,7 +1,5 @@
-import { AIContextDto } from "../../modules/chat/dto/chat.dtos";
+import { AIContextDto } from "../../services/openai/dtos/openai.dto";
 import { AIMessage } from "../interfaces";
-
-
 
 export abstract class BaseAIProvider {
     abstract generateResponse(messages: AIMessage[], context?: AIContextDto): Promise<string>;

@@ -1,7 +1,8 @@
 import { BadRequestException, Inject, Injectable, NestMiddleware, ServiceUnavailableException } from "@nestjs/common";
-import { OPENAI_PROVIDER, OpenAIProvider } from "../../modules/ai/openai.provider";
+
 import { NextFunction, Request, Response } from "express";
 import { PinoLogger } from "nestjs-pino";
+import { OPENAI_PROVIDER, OpenAIProvider } from "./../openai.provider";
 
 @Injectable()
 export class OpenAIMiddleware implements NestMiddleware {

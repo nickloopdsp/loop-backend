@@ -1,8 +1,8 @@
 import OpenAI from 'openai';
 import { BaseAIProvider } from '../../core/base/base.ai.provider';
-import { AIContextDto } from '../chat/dto/chat.dtos';
 import { AIMessage } from '../../core/interfaces';
 import { PinoLogger } from 'nestjs-pino';
+import { AIContextDto } from './dtos/openai.dto';
 
 export const OPENAI_PROVIDER = 'OpenAiProvider';
 

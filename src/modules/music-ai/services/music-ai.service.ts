@@ -1,12 +1,13 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { UploadUrlsDto, WorkflowDto } from '../dto/music-ai.dtos';
-import { MusicAiProvider } from './musicai.provider';
+import { MUSIC_AI_PROVIDER, MusicAiServiceProvider } from '../../../services/music-ai/music-ai.service.provider';
 
 @Injectable()
 export class MusicAiService {
 
   constructor(
-    private readonly aiProvider: MusicAiProvider
+    @Inject(MUSIC_AI_PROVIDER)
+    private readonly aiProvider: MusicAiServiceProvider
   ) { }
 
   async getUploadUrls(): Promise<UploadUrlsDto[]> {

@@ -1,11 +1,12 @@
-import { Injectable } from "@nestjs/common";
-import { CreateJobRequestDto, CreateJobResponseDto, JobDto, JobStatus, JobStatusDto, DeleteJobResponseDto } from "../dto/music-ai.dtos";
-import { MusicAiProvider } from "./musicai.provider";
+import { Inject, Injectable } from "@nestjs/common";
+import { CreateJobRequestDto, CreateJobResponseDto, JobDto, JobStatusDto, DeleteJobResponseDto } from "../dto/music-ai.dtos";
+import { MUSIC_AI_PROVIDER, MusicAiServiceProvider } from "../../../services/music-ai/music-ai.service.provider";
 
 @Injectable()
 export class MusicAiJobService {
     constructor(
-        private readonly aiProvider: MusicAiProvider
+        @Inject(MUSIC_AI_PROVIDER)
+        private readonly aiProvider: MusicAiServiceProvider
     ) { }
     async createJob(createJobDto: CreateJobRequestDto): Promise<CreateJobResponseDto> {
         const newJob = await this.aiProvider.createJob(createJobDto);

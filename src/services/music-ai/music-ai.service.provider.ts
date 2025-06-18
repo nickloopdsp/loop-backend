@@ -1,18 +1,14 @@
 import { HttpService } from "@nestjs/axios";
-import { Injectable } from "@nestjs/common";
-import { AppConfigService } from "../../../config/config.service";
-import { MusicAiConfig } from "../../../config/interfaces/config.interface";
-import { JobDto, UploadUrlsDto, WorkflowDto, WorkflowParamDto } from "../dto/music-ai.dtos";
 import { PinoLogger } from "nestjs-pino";
+import { UploadUrlsDto, WorkflowDto, WorkflowParamDto, JobDto } from "../../modules/music-ai/dto/music-ai.dtos";
 
+export const MUSIC_AI_PROVIDER = 'MUSIC_AI_PROVIDER';
 
-@Injectable()
-export class MusicAiProvider {
-    constructor(private readonly httpService: HttpService, private readonly configService: AppConfigService, private readonly logger: PinoLogger) {
-        this.logger.setContext(MusicAiProvider.name);
-        const musicAiConfig = this.configService.get<MusicAiConfig>('musicAi');
-        this.httpService.axiosRef.defaults.baseURL = musicAiConfig.baseUrl
-        this.httpService.axiosRef.defaults.headers.common['Authorization'] = musicAiConfig.apiKey
+export class MusicAiServiceProvider {
+    constructor(private readonly httpService: HttpService, private readonly logger: PinoLogger, private readonly apiKey: string, private readonly baseUrl: string) {
+        this.logger.setContext(MusicAiServiceProvider.name);
+        this.httpService.axiosRef.defaults.baseURL = baseUrl
+        this.httpService.axiosRef.defaults.headers.common['Authorization'] = apiKey
         this.httpService.axiosRef.defaults.headers.common['Content-Type'] = 'application/json'
 
     }
@@ -100,3 +96,5 @@ export class MusicAiProvider {
         }
     }
 }
+
+
