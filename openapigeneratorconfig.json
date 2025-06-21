@@ -1,5 +1,5 @@
 {
-    "npmName": "@loop/sdk",
+    "npmName": "@nickloopdsp/loop-sdk",
     "npmRepository": "https://npm.pkg.github.com",
     "supportsES6": true,
     "snapshot": false

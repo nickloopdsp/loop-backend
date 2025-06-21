@@ -12,10 +12,16 @@ import { DashboardLayoutModule } from './modules/dashboardlayout/dashboard-layou
 import { MusicAiModule } from './modules/musicai/music-ai.module';
 import { MockModule } from './modules/mock/mock.module';
 import { SoundChartModule } from './modules/soundchart/sound-chart.module';
+import { WinstonModule } from 'nest-winston';
+import { WinstonLoggerConfig } from './core/logger-config/winston.logger.config';
 
 @Module({
   imports: [
     ConfigModule,
+    WinstonModule.forRootAsync({
+      useClass: WinstonLoggerConfig,
+      inject: [AppConfigService],
+    }),
     LoggerModule,
     ThrottlerConfigModule,
     MockModule,

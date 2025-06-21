@@ -40,11 +40,8 @@ The project includes a TypeScript SDK that is automatically generated from the O
 
 ```bash
 # Generate and build the SDK
-./scripts/generate-sdk.sh
+./make_publish_sdk.sh
 
-# The SDK will be generated in the .sdk directory
-# After generation, you can use it in your projects by:
-npm install ./sdk
 ```
 
 The SDK generation script will:

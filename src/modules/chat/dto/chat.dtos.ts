@@ -64,10 +64,10 @@ export class ChatRequestDto {
 
     @ApiPropertyOptional({
         description: 'The conversation history',
-        example: []
+        type: [ChatHistoryDto],
     })
-    @IsArray()
     @IsOptional()
+    @IsArray()
     conversationHistory?: ChatHistoryDto[];
 
     @ApiPropertyOptional({

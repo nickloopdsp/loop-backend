@@ -13,6 +13,11 @@ export default (): Configuration => {
         port: parseInt(process.env.PORT || '3001', 10),
         apiPrefix: process.env.API_PREFIX || 'api',
         apiVersion: process.env.API_VERSION || 'v1',
+        logger: {
+            level: process.env.LOG_LEVEL || 'info',
+            logUrl: process.env.GRAYLOG_URL || 'logs.loop.com',
+            port: process.env.GRAYLOG_PORT || '12201',
+        },
         jwt: {
             secret: process.env.JWT_SECRET || 'default-secret-key-change-in-production',
             expiresIn: process.env.JWT_EXPIRATION || '1d',
@@ -51,6 +56,10 @@ export default (): Configuration => {
             apiKey: process.env.SOUNDCHARTS_API_KEY || '',
             baseUrl: process.env.SOUNDCHARTS_API_BASE_URL || '',
             appId: process.env.SOUNDCHARTS_APP_ID || '',
+        },
+        swagger: {
+            user: process.env.SWAGGER_USER || '',
+            password: process.env.SWAGGER_PASSWORD || '',
         },
     };
 }; 

@@ -1,7 +1,8 @@
 import { Module, INestApplication } from '@nestjs/common';
 import { SwaggerModule as NestSwaggerModule, DocumentBuilder } from '@nestjs/swagger';
-import { AppConfigService, FeatureFlagsConfig } from '../../config';
+import { AppConfigService, FeatureFlagsConfig, SwaggerConfig } from '../../config';
 import { Request, Response } from 'express';
+import * as basicAuth from 'express-basic-auth';
 
 @Module({})
 export class RedDocsModule {
@@ -11,6 +12,19 @@ export class RedDocsModule {
 
     if (!isSwaggerEnabled) {
       return;
+    }
+
+    const swaggerConfig = configService.get<SwaggerConfig>('swagger');
+
+    if (swaggerConfig.user && swaggerConfig.password) {
+      app.use(
+        ['/api/docs', '/api/docs-json', '/redocs', '/redocs/spec.json'],
+        basicAuth({
+          challenge: true,
+          users: {
+            [swaggerConfig.user]: swaggerConfig.password,
+          },
+        }));
     }
 
     const options = new DocumentBuilder()

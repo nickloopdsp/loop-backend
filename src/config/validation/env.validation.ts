@@ -14,6 +14,19 @@ export const validationSchema = Joi.object({
     API_VERSION: Joi.string()
         .default('v1')
         .description('API version number'),
+
+    LOG_LEVEL: Joi.string()
+        .default('info')
+        .description('Log level'),
+
+    GRAYLOG_URL: Joi.string()
+        .default('logs.loop.com')
+        .description('Graylog URL'),
+
+    GRAYLOG_PORT: Joi.number()
+        .default(12201)
+        .description('Graylog port'),
+
     JWT_SECRET: Joi.string()
         .required()
         .description('Secret key for JWT token generation and verification'),
@@ -58,6 +71,12 @@ export const validationSchema = Joi.object({
         .default(true)
         .description('Enable/disable Rate Limit'),
 
+    SWAGGER_USER: Joi.string()
+        .allow('')
+        .description('Swagger username'),
+    SWAGGER_PASSWORD: Joi.string()
+        .allow('')
+        .description('Swagger password'),
     // OpenAI
     OPENAI_API_KEY: Joi.string()
         .allow('')

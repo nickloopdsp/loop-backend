@@ -26,6 +26,11 @@ export interface FeatureFlagsConfig {
     enableRateLimit: boolean;
 }
 
+export interface SwaggerConfig {
+    user: string;
+    password: string;
+}
+
 export interface RateLimitConfig {
     ttl: number;
     limit: number;
@@ -50,6 +55,12 @@ export interface SoundChartConfig {
     appId: string;
 }
 
+export interface LoggerConfig {
+    level: string;
+    logUrl: string;
+    port: string
+}
+
 export interface Configuration {
     port: number;
     apiPrefix: string;
@@ -63,4 +74,6 @@ export interface Configuration {
     openai: OpenAiConfig;
     musicAi: MusicAiConfig;
     soundChart: SoundChartConfig;
+    swagger: SwaggerConfig;
+    logger: LoggerConfig;
 }
