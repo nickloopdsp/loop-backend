@@ -1,11 +1,11 @@
-import { ExceptionFilter, Catch, ArgumentsHost, HttpException, HttpStatus } from '@nestjs/common';
+import { ExceptionFilter, Catch, ArgumentsHost, HttpException, HttpStatus, Logger } from '@nestjs/common';
 import { Request, Response } from 'express';
-import { PinoLogger } from 'nestjs-pino';
 
 @Catch()
 export class AppExceptionFilter implements ExceptionFilter {
-    constructor(private readonly logger: PinoLogger) {
-        this.logger.setContext(AppExceptionFilter.name);
+    private readonly logger = new Logger(AppExceptionFilter.name);
+    constructor() {
+
     }
 
     catch(exception: unknown, host: ArgumentsHost) {

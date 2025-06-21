@@ -1,6 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { Logger, ValidationPipe, VersioningType } from '@nestjs/common';
+import { ValidationPipe, VersioningType } from '@nestjs/common';
 import { AppConfigService } from './config/config.service';
 import { RedDocsModule } from './core/redoc/redocs.module';
 import { requestContextMiddleware } from '@medibloc/nestjs-request-context';
@@ -10,9 +10,12 @@ import { LoggerConfig } from './config/interfaces/config.interface';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
-    bufferLogs: true,
-    bodyParser: true,
+    // Disable default logger to use Winston
+    logger: false,
   });
+
+  // Use Winston for all application logging
+  app.useLogger(app.get(WINSTON_MODULE_NEST_PROVIDER));
 
   const configService = app.get<AppConfigService>(AppConfigService);
   const loggerConfig = configService.get<LoggerConfig>('logger');
@@ -23,7 +26,6 @@ async function bootstrap() {
 
 
   app.getHttpAdapter().getInstance().disable('x-powered-by');
-  app.useLogger(app.get(WINSTON_MODULE_NEST_PROVIDER));
 
 
   app.enableCors({

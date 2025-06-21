@@ -1,14 +1,14 @@
 import { HttpService } from "@nestjs/axios";
-import { OnModuleInit } from "@nestjs/common";
-import { PinoLogger } from "nestjs-pino";
+import { Logger, OnModuleInit } from "@nestjs/common";
 import { SoundChartConfig } from "src/config/interfaces/config.interface";
 import { ArtistAudienceDto, ArtistConcertDto, ArtistStatsDto, SoundchartArtistDto, SoundchartsArtistSearchResponse } from "./dtos/soundchart.service.dtos";
 
 export const SOUNDCHARTS_PROVIDER = 'SoundChartServiceProvider';
 
 export class SoundChartServiceProvider implements OnModuleInit {
-    constructor(private readonly httpService: HttpService, private readonly logger: PinoLogger, private readonly soundChartConfig: SoundChartConfig) {
-        this.logger.setContext(SoundChartServiceProvider.name);
+
+    private readonly logger = new Logger(SoundChartServiceProvider.name);
+    constructor(private readonly httpService: HttpService, private readonly soundChartConfig: SoundChartConfig) {
         this.httpService.axiosRef.defaults.baseURL = this.soundChartConfig.baseUrl;
         this.httpService.axiosRef.defaults.headers.common['x-app-id'] = this.soundChartConfig.appId;
         this.httpService.axiosRef.defaults.headers.common['x-api-key'] = this.soundChartConfig.apiKey;

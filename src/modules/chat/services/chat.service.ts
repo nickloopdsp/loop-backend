@@ -1,22 +1,23 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, Logger } from '@nestjs/common';
 import { ChatRequestDto, ChatMessageResponseDto, AnalyzeRequestDto, AnalyzeResponseDto } from '../dto/chat.dtos';
 import { OPENAI_PROVIDER, OpenAIProvider } from '../../../integrations/openai';
 import { AIMessage } from '../../../core/interfaces';
-import { PinoLogger } from 'nestjs-pino';
+import { AppConfigService } from '../../../config';
 
 @Injectable()
 export class ChatService {
-
+  private readonly logger = new Logger(ChatService.name);
 
   constructor(
     @Inject(OPENAI_PROVIDER)
     private readonly openaiProvider: OpenAIProvider,
-    private readonly logger: PinoLogger
+    private readonly configService: AppConfigService,
   ) {
-    this.logger.setContext(ChatService.name);
+    this.logger.log('Chat service initialized');
   }
 
   async message(chatRequestDto: ChatRequestDto): Promise<ChatMessageResponseDto> {
+    this.logger.log(`Processing chat message`);
 
     const { message, conversationHistory = [], context = {} } = chatRequestDto;
 

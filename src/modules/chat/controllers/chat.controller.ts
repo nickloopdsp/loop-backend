@@ -1,20 +1,18 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Res } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Res, UsePipes, ValidationPipe, Logger } from '@nestjs/common';
 import { ChatService } from '../services/chat.service';
 import { AnalyzeRequestDto, AnalyzeResponseDto, ChatMessageResponseDto, ChatRequestDto } from '../dto/chat.dtos';
 import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Response } from 'express';
-import { PinoLogger } from 'nestjs-pino';
 
 @ApiTags('Chat')
 @ApiBearerAuth()
 @Controller('chat')
 export class ChatController {
-  constructor(private readonly chatService: ChatService,
-    private readonly logger: PinoLogger
-  ) {
-    this.logger.setContext(ChatController.name);
-  }
+  private readonly logger = new Logger(ChatController.name);
 
+  constructor(private readonly chatService: ChatService) {
+    this.logger.log('Chat controller initialized');
+  }
 
   @Post('message')
   @ApiOperation({ summary: 'Send a message to the AI' })
@@ -26,6 +24,7 @@ export class ChatController {
   @ApiResponse({ status: 402, description: 'Insufficient credits' })
   @ApiResponse({ status: 503, description: 'OpenAI service is not available' })
   message(@Body() chatRequestDto: ChatRequestDto) {
+    this.logger.log(`Received new chat request`);
     return this.chatService.message(chatRequestDto);
   }
 
