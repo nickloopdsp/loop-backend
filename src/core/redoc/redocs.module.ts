@@ -45,7 +45,9 @@ export class RedDocsModule {
       .addServer('https://loop.com', 'Production')
       .build();
 
-    const document = NestSwaggerModule.createDocument(app, options);
+    const document = NestSwaggerModule.createDocument(app, options, {
+      operationIdFactory: (controllerKey: string, methodKey: string) => methodKey,
+    });
 
     // Custom Swagger UI options
     const customOptions = {
